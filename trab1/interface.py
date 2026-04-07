@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from combinacoes import criar_panorama as costurar
 
 
-# Variáveis globais para armazenar os caminhos
 caminho_img1 = ""
 caminho_img2 = ""
 
@@ -76,7 +75,6 @@ def abrir_camera():
     cap.release()
     cv2.destroyAllWindows()
 
-# --- Configuração da Janela Tkinter ---
 janela = tk.Tk()
 janela.title("Visão computacional 1")
 janela.geometry("420x360")

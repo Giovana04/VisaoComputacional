@@ -13,11 +13,10 @@ def criar_panorama(img_esq_path, img_dir_path, extrator_tipo, matcher_tipo):
         print("Imagem não encontrada")
         return None, 0
 
-    # SIFT e ORB trabalham com imagens em tons de cinza
     gray_esq = cv2.cvtColor(img_esq, cv2.COLOR_BGR2GRAY)
     gray_dir = cv2.cvtColor(img_dir, cv2.COLOR_BGR2GRAY)
 
-    # 1. Encontrar pontos de interesse
+    # Encontrar pontos de interesse
     if extrator_tipo == 'SIFT':
         detector = cv2.SIFT_create() 
         norm_type = cv2.NORM_L2
@@ -28,7 +27,7 @@ def criar_panorama(img_esq_path, img_dir_path, extrator_tipo, matcher_tipo):
     kp1, des1 = detector.detectAndCompute(gray_esq, None)
     kp2, des2 = detector.detectAndCompute(gray_dir, None)
 
-    # 2. Encontrar correspondências
+    # Encontrar correspondências
     matches_bons = []
     
     if matcher_tipo == 'BF':
@@ -55,7 +54,7 @@ def criar_panorama(img_esq_path, img_dir_path, extrator_tipo, matcher_tipo):
                 if m.distance < 0.75 * n.distance:
                     matches_bons.append(m)
 
-    # 3. Homografia e Warping 
+    #Homografia e Warping 
     MIN_MATCH_COUNT = 10 
     if len(matches_bons) > MIN_MATCH_COUNT:
         src_pts = np.float32([kp1[m.queryIdx].pt for m in matches_bons]).reshape(-1, 1, 2)
