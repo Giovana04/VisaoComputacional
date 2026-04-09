@@ -6,7 +6,7 @@ pyautogui.FAILSAFE = False
 paramsShiTomasi = dict( maxCorners = 40,
                        qualityLevel = 0.9,
                        minDistance = 1,
-                       blockSize = 1)
+                       blockSize = 10)
 paramsLukasKanade = dict( winSize  = (15, 15),
                   maxLevel = 2,
                   criteria = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03))
@@ -28,6 +28,9 @@ def loop_gestos(cap, ret, frame):
     global frame_cinzaIn, p0, mask, qntdAtualFrames
     frame_cinza = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     p1, st, err = cv.calcOpticalFlowPyrLK(frame_cinzaIn, frame_cinza, p0, None, **paramsLukasKanade)
+    qntdEsq = 0
+    qntdEsq = 0
+    qntdIgual = 10
     if p1 is not None:
         good_new = p1[st==1]
         good_old = p0[st==1]
@@ -37,7 +40,7 @@ def loop_gestos(cap, ret, frame):
         qntdDir = 0
         for i in range(0, len(good_new)):
             
-            if(abs(good_new[i][0] - good_old[i][0]) >= 1):
+            if(abs(good_new[i][0] - good_old[i][0]) >= 0.1):
                 if(good_new[i][0]-good_old[i][0] > 0):
                     qntdEsq += 1
                 else:
@@ -53,5 +56,5 @@ def loop_gestos(cap, ret, frame):
     setas("left") if qntdEsq > qntdDir else setas('right') if qntdDir >= qntdIgual else print('Parado')
     img = cv.add(frame, mask)
     
-    return frame
+    # return frame
     

@@ -57,17 +57,18 @@ def abrir_camera():
     if not cap.isOpened():
         messagebox.showerror("Erro", "sem camera")
         return
-    
     messagebox.showinfo("Aviso", "Aperte 'Q' na janela da câmera para fechar")
     iniciar(cap)
     
     while True:
         ret, frame = cap.read()
+        frameNew = frame
         if not ret:
             break
-        frame = loop_gestos(cap, ret, frame)
+        loop_gestos(cap, ret, frameNew)
         cv2.putText(frame, "Aperte Q pra sair", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         cv2.imshow('Interface Gestual', frame)
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
             
