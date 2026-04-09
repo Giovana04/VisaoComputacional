@@ -3,8 +3,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 import matplotlib.pyplot as plt
 from combinacoes import criar_panorama as costurar
-
-
+from gestos import iniciar, loop_gestos
 caminho_img1 = ""
 caminho_img2 = ""
 
@@ -60,15 +59,15 @@ def abrir_camera():
         return
     
     messagebox.showinfo("Aviso", "Aperte 'Q' na janela da câmera para fechar")
+    iniciar(cap)
     
     while True:
         ret, frame = cap.read()
         if not ret:
             break
-        
+        frame = loop_gestos(cap, ret, frame)
         cv2.putText(frame, "Aperte Q pra sair", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         cv2.imshow('Interface Gestual', frame)
-        
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
             
