@@ -33,7 +33,7 @@ with HandLandmarker.create_from_options(options) as landmarker:
         dir = None
         baixo = None
         cima = None
-        
+        qntd, xT, yT = 0, 0, 0        
         for hand_mark in hand_landmarker_result.hand_landmarks:
             for i in range(0, len(hand_mark)):
                 pt1 = hand_mark[i]
@@ -47,7 +47,8 @@ with HandLandmarker.create_from_options(options) as landmarker:
                 if(dir == None):
                     dir = x
                 elif dir < x:
-                    dir = x               
+                    dir = x              
+                xT += x
                 y = int(pt1.y*height)
                 if(cima == None):
                     cima = y
@@ -57,9 +58,16 @@ with HandLandmarker.create_from_options(options) as landmarker:
                     baixo = y
                 elif baixo > y:
                     baixo = y
+                yT += y
+                qntd += 1
+                cv.circle(frame,(x,y), 6, (100,100,0), -1)
         if(cima != None):
             # caso uma mão tenha sido detectada, cria cubo na mão
-            frame = cubo.criar_cubo(frame,[cima, baixo, dir, esq])
+            # frame = cubo.criar_cubo(frame,[cima, baixo, dir, esq])  
+            xT /= qntd
+            yT /= qntd
+            cv.circle(frame,(int(xT),int(yT)), 6, (100,100,200), -1)
+            frame = cubo.criar_cubo(frame, [(xT), (yT)], [cima, baixo, dir, esq])
         cv.imshow('Detectar Mão', frame)
         if cv.waitKey(1) == ord('q'):
             break
