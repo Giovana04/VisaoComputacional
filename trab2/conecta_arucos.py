@@ -31,8 +31,9 @@ while True:
         if(len(ids) > 1):
             # Se tem mais de dois marcadores, faz o calculo da distância dos 2 primeiros
             c1 = corners[0][0]
+            distAruco = cv2.norm(c1[0] - c1[1])
             center1 = (int(np.mean(c1[:, 0])), int(np.mean(c1[:, 1])))
-            
+            ratioCmPixel = distAruco/marker_size_cm
             c2 = corners[1][0]
             center2 = (int(np.mean(c2[:, 0])), int(np.mean(c2[:, 1])))
             #Cria uma linha entre os arucos, e pegue a mediana dessa linha! Nesse caso a mediana está um pouco acima no eixo y
@@ -42,8 +43,9 @@ while True:
             cv2.line(frame, center1, center2, (184,90,193), 3)
             # Calcula a distância entre os dois pontos!
             dist = cv2.norm(tvecs[0] - tvecs[1])
+            dist = dist*ratioCmPixel
             # Coloca o texto em cima da linha que conecta os dois pontos!
-            frame = cv2.putText(frame, f"{dist:.4f}", median, cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
+            frame = cv2.putText(frame, f"{dist:.4f} cm", median, cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
     cv2.imshow('Câmera', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'): break
 
