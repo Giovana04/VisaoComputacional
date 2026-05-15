@@ -1,15 +1,13 @@
 import cv2
 import numpy as np
 
-# É pra ser o valor da calibração.mas eu n tenho um tabuleiro aruco pra conseguir conseguir os dados
-# e varia de camera pra camera, então iso aqui no momento é um placeholder]
 camera_matrix = np.array([[1000, 0, 640], [0, 1000, 360], [0, 0, 1]], dtype=float)
 dist_coeffs = np.array([0, 0, 0, 0], dtype=float)
 
 # 2. Colocar o tamanho do marcador! Os que eu tô usando de teste tem esse tamanho, então no momento to deixando fisici
-marker_size_cm = 3.4 # Physical size in cm
+marker_size_cm = 5.7 # Physical size in cm
 marker_size_m = marker_size_cm / 100
-aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 parameters = cv2.aruco.DetectorParameters()
 
 cap = cv2.VideoCapture(0)
