@@ -11,7 +11,7 @@ def remover_bordas(image):
     img = cv2.bitwise_not(img)
     altura, largura = img.shape[:2]
 
-    alt_cortada, lar_cortada = 200, 245
+    alt_cortada, lar_cortada = int(altura/1.4), int(largura/1.4)
     ini_x, ini_y = int((largura - lar_cortada)/2), int((altura-alt_cortada)/2)
     fim_x, fim_y = (ini_x+lar_cortada), (ini_y+alt_cortada)
     

@@ -7,7 +7,7 @@ def esqueleto(isosuperficie, volume):
     volume = volume > 50
     esqueleto = skeletonize(volume)
     coordenadas = np.argwhere(esqueleto).astype(np.float32)
-    
+    coordenadas = coordenadas[:, [2, 1, 0]]
     arvore = KDTree(coordenadas)
     
     pares = arvore.query_pairs(r=1.8)

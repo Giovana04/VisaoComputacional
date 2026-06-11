@@ -10,7 +10,7 @@ def isosuperficie(volume):
     grade.spacing = (1.0,1.0,1.0)
     grade.origin = (0.0,0.0,0.0)
     
-    grade.point_data["intensidade"] = volume.flatten(order="F")
+    grade.point_data["intensidade"] = volume.flatten(order="C")
     
     malha = grade.contour(isosurfaces=[50])
     # aplicação decimação
