@@ -6,7 +6,7 @@ def isosuperficie(volume):
     volume = gaussian_filter(volume, sigma=1.4)
     
     grade = pv.ImageData()
-    grade.dimensions = volume.shape
+    grade.dimensions = (volume.shape[2], volume.shape[1], volume.shape[0])
     grade.spacing = (1.0,1.0,1.0)
     grade.origin = (0.0,0.0,0.0)
     

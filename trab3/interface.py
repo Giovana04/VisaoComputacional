@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+
+# Importa as suas funções mágicas
 from calculo_volume import calculo_volume
 from isosuperficie import isosuperficie
 from esqueleto import esqueleto
@@ -60,6 +62,7 @@ def calcular_met():
     janela.update()
     
     try:
+        # Agora recebe o texto formatado direto da função
         texto_resultado = calcular_metricas(dados["superficie"], dados["volume"])
         
         text_metricas.delete("1.0", tk.END)
@@ -78,9 +81,10 @@ def mostrar_dividida():
         messagebox.showerror("Erro", f"visualização dividida:\n{e}")
 
 
+# --- Configuração da Janela Principal ---
 janela = tk.Tk()
 janela.title("Trab 3 - Visão Computacional")
-janela.geometry("450x650") 
+janela.geometry("450x650") # Dei uma esticada na janela para caber o texto
 janela.eval('tk::PlaceWindow . center')
 
 tk.Label(janela, text="Selecione a Raiz:", font=("Arial", 12)).pack(pady=(20, 5))
@@ -98,6 +102,7 @@ tk.Button(janela, text="5. Visualização Dividida", command=mostrar_dividida, w
 lbl_status = tk.Label(janela, text="Aguardando comandos...", font=("Arial", 10, "italic"))
 lbl_status.pack(pady=10)
 
+# Aumentei o height para 13 para caber as 9 métricas + títulos sem scrollbar
 text_metricas = tk.Text(janela, height=13, width=45, font=("Consolas", 10))
 text_metricas.pack(pady=5)
 
