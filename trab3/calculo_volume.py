@@ -4,11 +4,12 @@ from PIL import Image
 import numpy as np
 import cv2
 import pyvista as pv
+
 def remover_bordas(image):
     # converte a foto de Pillow pra Cv2
     img = np.array(image)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = cv2.bitwise_not(img)
+    img = cv2.bitwise_not(img) 
     altura, largura = img.shape[:2]
 
     alt_cortada, lar_cortada = int(altura/1.4), int(largura/1.4)
@@ -42,25 +43,29 @@ def carregar_fotos_volume(pasta):
             array_volume[z,:,:]  = np.array(img.convert("L"))
     return array_volume
 
+# def calculo_volume(pasta):
+#     print("Gerando Volume...")
+#     # fala qual conjunto de fotos vai ser lido
+#     pasta = pasta
+#     volume = carregar_fotos_volume(pasta)
+    
+#     grid = pv.ImageData()
+    
+#     grid.dimensions = (volume.shape[2], volume.shape[1], volume.shape[0])
+    
+#     grid.point_data["densidade"] = volume.flatten(order="C")
+    
+#     plotter = pv.Plotter()
+#     plotter.add_volume(
+#         grid,
+#         scalars="densidade",
+#         cmap="grayC",
+#         opacity="sigmoid",
+#         blending="composite"
+#     )
+#     plotter.show()
+#     return volume
+
 def calculo_volume(pasta):
-    print("Gerando Volume...")
-    # fala qual conjunto de fotos vai ser lido
-    pasta = pasta
-    volume = carregar_fotos_volume(pasta)
-    
-    grid = pv.ImageData()
-    
-    grid.dimensions = (volume.shape[2], volume.shape[1], volume.shape[0])
-    
-    grid.point_data["densidade"] = volume.flatten(order="C")
-    
-    plotter = pv.Plotter()
-    plotter.add_volume(
-        grid,
-        scalars="densidade",
-        cmap="grayC",
-        opacity="sigmoid",
-        blending="composite"
-    )
-    plotter.show()
-    return volume
+    print(f"Lendo {pasta}...")
+    return carregar_fotos_volume(pasta)
